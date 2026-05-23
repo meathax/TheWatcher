@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Watcher — A Storyteller That Remembers You</title>
+<style>
+  :root {
+    --bg: #08090d;
+    --bg-soft: #0e1018;
+    --bg-card: #161823;
+    --border: #20232f;
+    --border-soft: #1a1d27;
+    --text: #d8dbe0;
+    --text-dim: #888d99;
+    --text-faint: #5a5f6b;
+    --gold: #d4a85a;
+    --gold-bright: #f0c478;
+    --gold-soft: #8a6e3b;
+    --crimson: #c75050;
+    --teal: #5fa8a8;
+    --violet: #9079c2;
+    --green: #6bb072;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ============================================================ */
+  /* HERO                                                          */
+  /* ============================================================ */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 32px;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(212, 168, 90, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 80%, rgba(95, 168, 168, 0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(199, 80, 80, 0.05) 0%, transparent 55%),
+      linear-gradient(180deg, #08090d 0%, #0d0f15 100%);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 1px, transparent 2px),
+      radial-gradient(circle at 80% 60%, rgba(255,255,255,0.03) 1px, transparent 2px),
+      radial-gradient(circle at 50% 80%, rgba(255,255,255,0.04) 1px, transparent 2px),
+      radial-gradient(circle at 65% 20%, rgba(255,255,255,0.03) 1px, transparent 2px),
+      radial-gradient(circle at 15% 75%, rgba(255,255,255,0.03) 1px, transparent 2px);
+    background-size: 600px 600px, 800px 800px, 400px 400px, 700px 700px, 500px 500px;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .hero-inner {
+    position: relative;
+    max-width: 880px;
+  }
+  .hero-eyebrow {
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0.85;
+  }
+  .hero-title {
+    margin: 0;
+    font-size: clamp(48px, 9vw, 110px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: #fff;
+    line-height: 1.05;
+  }
+  .hero-title .accent {
+    color: var(--gold);
+  }
+  .hero-tagline {
+    margin: 28px auto 0;
+    font-size: clamp(18px, 2vw, 22px);
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 680px;
+    line-height: 1.55;
+  }
+  .hero-pitch {
+    margin: 48px auto 0;
+    font-size: 17px;
+    color: var(--text);
+    max-width: 640px;
+    line-height: 1.75;
+  }
+
+  /* ============================================================ */
+  /* CONTAINER                                                     */
+  /* ============================================================ */
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 24px 0;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+  .section-lead {
+    font-size: 19px;
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+
+  /* ============================================================ */
+  /* PROMISE row                                                   */
+  /* ============================================================ */
+  .promise {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .promise-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 26px;
+  }
+  .promise-num {
+    color: var(--gold);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .promise-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 10px 0;
+  }
+  .promise-body {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ============================================================ */
+  /* FEATURE block (image-left / image-right alternation feel)     */
+  /* ============================================================ */
+  .feature-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-bottom: 96px;
+  }
+  .feature-block:last-child { margin-bottom: 0; }
+  .feature-block.reverse {
+    direction: rtl;
+  }
+  .feature-block.reverse > * { direction: ltr; }
+
+  .feature-art {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  }
+  .feature-art.gold-glow {
+    background: linear-gradient(135deg, #1a1410 0%, #161823 60%);
+    border-color: var(--gold-soft);
+  }
+  .feature-art.crimson-glow {
+    background: linear-gradient(135deg, #1a1010 0%, #161823 60%);
+    border-color: #6b3030;
+  }
+  .feature-art.teal-glow {
+    background: linear-gradient(135deg, #0e1818 0%, #161823 60%);
+    border-color: #305555;
+  }
+  .feature-art.violet-glow {
+    background: linear-gradient(135deg, #131020 0%, #161823 60%);
+    border-color: #503570;
+  }
+  .feature-art-eyebrow {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+  .feature-art-quote {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .feature-art-quote::before {
+    content: "\201C";
+    color: var(--gold);
+    font-size: 56px;
+    line-height: 0;
+    margin-right: 6px;
+    vertical-align: -22px;
+    opacity: 0.6;
+  }
+  .feature-art-attribution {
+    color: var(--text-faint);
+    font-size: 13px;
+    margin-top: 20px;
+    font-style: normal;
+  }
+
+  .feature-text h3 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+  .feature-text p {
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: var(--text);
+    margin: 0 0 16px 0;
+  }
+  .feature-text p:last-child { margin-bottom: 0; }
+  .feature-text strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ============================================================ */
+  /* SCENARIO TIMELINE                                             */
+  /* ============================================================ */
+  .timeline {
+    margin-top: 64px;
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--border);
+  }
+  .timeline-entry {
+    position: relative;
+    padding: 16px 0 16px 24px;
+  }
+  .timeline-entry::before {
+    content: "";
+    position: absolute;
+    left: -32px;
+    top: 28px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .timeline-day {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .timeline-text {
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ============================================================ */
+  /* PILLAR GRID (5 player-experience pillars)                     */
+  /* ============================================================ */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .pillar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 30px;
+  }
+  .pillar-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .pillar h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 12px 0;
+  }
+  .pillar p {
+    margin: 0 0 12px 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .pillar p:last-child { margin: 0; }
+
+  /* ============================================================ */
+  /* COMPAT BAR                                                    */
+  /* ============================================================ */
+  .compat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .compat-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 24px;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .compat-pill.included {
+    border-color: var(--gold-soft);
+    color: var(--gold);
+  }
+
+  /* ============================================================ */
+  /* CLOSING                                                       */
+  /* ============================================================ */
+  .closing {
+    padding: 120px 32px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(212, 168, 90, 0.07) 0%, transparent 60%),
+      var(--bg);
+    border-top: 1px solid var(--border-soft);
+  }
+  .closing h2 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 24px 0;
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+  .closing h2 .accent { color: var(--gold); }
+  .closing p {
+    color: var(--text-dim);
+    font-size: 18px;
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .closing .signature {
+    margin-top: 48px;
+    color: var(--gold);
+    font-style: italic;
+    font-size: 16px;
+  }
+
+  /* ============================================================ */
+  /* FOOTER                                                        */
+  /* ============================================================ */
+  footer {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 13px;
+    border-top: 1px solid var(--border-soft);
+  }
+
+  /* ============================================================ */
+  /* RESPONSIVE                                                    */
+  /* ============================================================ */
+  @media (max-width: 800px) {
+    .promise { grid-template-columns: 1fr; }
+    .feature-block { grid-template-columns: 1fr; gap: 32px; }
+    .feature-block.reverse { direction: ltr; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    section { padding: 64px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HERO                                                          -->
+<!-- ============================================================ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">A storyteller for RimWorld 1.6</div>
+    <h1 class="hero-title">The <span class="accent">Watcher</span></h1>
+    <p class="hero-tagline">
+      It does not roll dice. It observes. It learns your habits, studies your defenses,
+      remembers your enemies, and shapes the planet around the story you are creating.
+    </p>
+    <p class="hero-pitch">
+      Same threat budget as Cassandra. Smarter stories. A world that exists when you are not looking.
+    </p>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- THE PROMISE                                                   -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">The promise</div>
+    <h2 class="section-title">Same lethality. Better stories.</h2>
+    <p class="section-lead">
+      The Watcher matches Cassandra Classic's threat budget within five percent over every hundred-day window.
+      Your colony will face the same total weight of raids, the same dangers, the same stakes. What changes is
+      who sends them, why they come, what you can do about it, and what they leave behind.
+    </p>
+
+    <div class="promise">
+      <div class="promise-card">
+        <div class="promise-num">1</div>
+        <h3 class="promise-title">A planet that lives without you</h3>
+        <p class="promise-body">
+          Factions rise and fall. Wars are fought. Settlements appear and crumble. Caravans walk the world map.
+          Power changes hands. You can ignore it all, or you can shape it.
+        </p>
+      </div>
+      <div class="promise-card">
+        <div class="promise-num">2</div>
+        <h3 class="promise-title">Enemies who remember you</h3>
+        <p class="promise-body">
+          Named antagonists track grievances across hundreds of days. Raiders who escape come back.
+          Leaders who fall trigger succession. Every faction's relationship with you has memory.
+        </p>
+      </div>
+      <div class="promise-card">
+        <div class="promise-num">3</div>
+        <h3 class="promise-title">Choices that compound</h3>
+        <p class="promise-body">
+          Welcome a refugee. Hunt a warlord. Recover an artifact. Side with a faction at war.
+          Every decision changes the simulation. The Watcher remembers everything.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PILLAR 1 — Living world                                       -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="feature-block">
+      <div class="feature-art gold-glow">
+        <div class="feature-art-eyebrow">Day 47 — campaign log</div>
+        <p class="feature-art-quote">
+          The Sons of Vega outpost has appeared four tiles east of the colony. Their leader, Warlord Vega,
+          has declared a grievance against you. To the south, the Outlanders and the Tribe of Akar are at war —
+          contested settlements marked in red on the world map.
+        </p>
+        <div class="feature-art-attribution">— A typical mid-game campaign</div>
+      </div>
+      <div class="feature-text">
+        <div class="section-eyebrow">A living world</div>
+        <h3>The map is not decoration. It's the story.</h3>
+        <p>
+          Factions have power scores that rise and fall based on their wins and losses. Strong factions
+          plant <strong>new settlements</strong>. Weak ones lose theirs. When two factions enter war,
+          <strong>contested-front markers</strong> appear on their settlements and the world map shows
+          you who's winning. When a faction collapses, a <strong>successor faction</strong> may rise
+          from their ashes — a brand new faction, fresh procedural name, inheriting half its predecessor's
+          grudges.
+        </p>
+        <p>
+          You're not watching a slideshow of events. You're watching a planet make decisions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PILLAR 2 — Personal enemies                                   -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="feature-block reverse">
+      <div class="feature-art crimson-glow">
+        <div class="feature-art-eyebrow">A signature weapon's inspect line</div>
+        <p class="feature-art-quote">
+          Reaver of Vega — taken from the body of Warlord Vega of the Sons of Vega. Killed by Brennick on day 87.
+          The Watcher records this.
+        </p>
+        <div class="feature-art-attribution">— What you see when you hover the weapon</div>
+      </div>
+      <div class="feature-text">
+        <div class="section-eyebrow">Personal enemies</div>
+        <h3>Names. Not numbers.</h3>
+        <p>
+          Each major faction is led by <strong>named leaders</strong> with traits, priorities, and grievances.
+          They live in specific settlements you can see on the world map. Their personality drives the raids
+          they send: a Bloodlust leader hits hard and fast; a Cautious leader prepares for siege.
+        </p>
+        <p>
+          Hunt them down. Killing a named leader in their home settlement drops their faction's power,
+          triggers a <strong>seven-to-fourteen day succession crisis</strong>, and yields their
+          <strong>signature weapon</strong> — auto-named after them, marked for your campaign's history.
+          Their grievances against your colony are recited in the kill letter. The Watcher remembers.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PILLAR 3 — Meaningful expeditions                             -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="feature-block">
+      <div class="feature-art teal-glow">
+        <div class="feature-art-eyebrow">An ancient site discovered</div>
+        <p class="feature-art-quote">
+          Your scouts have identified an ancient site nearby — tier three. Rumour says it holds a cryostasis
+          vault containing an exceptional pre-fall survivor. Send an expedition to claim it, but expect resistance.
+        </p>
+        <div class="feature-art-attribution">— One of nine unique artifacts per save</div>
+      </div>
+      <div class="feature-text">
+        <div class="section-eyebrow">Meaningful expeditions</div>
+        <h3>Reasons to leave the colony.</h3>
+        <p>
+          When you have six modestly-armed pawns, the world has things to do. <strong>Hunt named antagonists</strong>
+          in their fortresses. <strong>Defend pursued refugees</strong> from hostiles closing in on the world map.
+          <strong>Excavate ancient battle scars</strong> for buried lore and silver. <strong>Raid ancient sites</strong>
+          guarded by long-dead defenders for save-defining artifacts.
+        </p>
+        <p>
+          Every encounter scales to your squad strength. Two pawns with melee face a different fight than twelve
+          pawns with charge weapons. The reward scales with the risk. Nothing is grindable — the world has
+          a finite number of artifacts, a finite number of leaders, a finite supply of secrets.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PILLAR 4 — A storyteller that knows you                       -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="feature-block reverse">
+      <div class="feature-art violet-glow">
+        <div class="feature-art-eyebrow">The Watcher speaks</div>
+        <p class="feature-art-quote">
+          It is day eighty-seven. I have been watching since before you arrived. I remember the Sons of Vega.
+          They were a power once, and you watched them fall. You have shaped this colony into a Fortress.
+          I know what that means for who you will become.
+        </p>
+        <div class="feature-art-attribution">— A first-person message that fires roughly every thirty days</div>
+      </div>
+      <div class="feature-text">
+        <div class="section-eyebrow">A storyteller that knows you</div>
+        <h3>It pays attention. You'll feel it.</h3>
+        <p>
+          The Watcher profiles your colony across twelve axes — combat, food, medicine, defense, social,
+          economic, awareness, adaptability, and more. It identifies your <strong>archetype</strong>
+          (Fortress, Wanderer, Cannibal Cult, Mech Empire, Pacifist Refuge…) and adapts.
+        </p>
+        <p>
+          Raids you've mastered get countered. Threats you haven't seen show up. Recovery windows protect you
+          after trauma. Telegraphs warn before major events, sometimes truthfully, sometimes as bluffs.
+          The longer you play, the more the Watcher's stories sound like they were written for you —
+          because they were.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PILLAR 5 — The Atlas                                          -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">The Campaign Atlas</div>
+    <h2 class="section-title">Every event remembered.</h2>
+    <p class="section-lead">
+      Press F11 in-game to open the Campaign Atlas — a scrollable timeline of every major event the Watcher
+      has recorded across your save. Filter by category, search by faction, jump to any tile on the world map.
+      Sparkline graphs show each faction's power trajectory over time. The Watch List predicts what's
+      coming next: factions about to collapse, outposts about to disband, wars about to resolve.
+    </p>
+
+    <div class="pillar-grid">
+      <div class="pillar">
+        <h3>Timeline</h3>
+        <p>
+          Hundreds of recorded events from the start of your campaign to the present moment. Settlement births,
+          wars, leader deaths, refugee arrivals, artifact recoveries, succession events — categorised, searchable,
+          color-coded.
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Sparklines</h3>
+        <p>
+          A line graph per faction showing their Watcher Power score over the last thirty weekly samples.
+          See who's rising, who's falling, who's about to break.
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Now Happening</h3>
+        <p>
+          In-flight refugee caravans with ETAs. Active wars with countdowns. Outposts about to expire.
+          Factions on the brink. Pending successors. Every active world-layer event in one place.
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Watch List</h3>
+        <p>
+          The Watcher's predictions. Faction X may collapse in twelve days. Faction Y is building toward
+          an outpost on your region. War Z will resolve in eight days. Plan accordingly.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCENARIO TIMELINE                                             -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">A typical first 100 days</div>
+    <h2 class="section-title">This is how a campaign feels.</h2>
+    <p class="section-lead">
+      The Watcher seeds variance at game start so the first hundred days are dramatic, not silent.
+      Here's how a real campaign unfolds:
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 0</div>
+        <p class="timeline-text">
+          Opening report from the Watcher. You learn the current political map: who's dominant, who's on the
+          brink, where the rivalries are.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 8</div>
+        <p class="timeline-text">
+          The Outlanders and a Tribe declare war on each other. Red contested-marker rings appear on settlements
+          of both sides on the world map.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 14</div>
+        <p class="timeline-text">
+          Pirates plant an outpost four tiles east of the colony. Threat tier: low. Their leader has declared
+          a grievance against you for the wealth you've accumulated.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 32</div>
+        <p class="timeline-text">
+          A settlement falls in the war. A caravan of refugees from the fallen settlement begins walking
+          toward your colony — but they are being pursued by hostiles.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 46</div>
+        <p class="timeline-text">
+          You send a caravan to intercept the pursuers. Two refugees survive the fight and join your colony.
+          The faction whose settlement was destroyed will not forget what you did for them.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 62</div>
+        <p class="timeline-text">
+          The Tribe of Akar collapses after their power score crosses the threshold. A pirate faction
+          claims one of their former settlements. The Watcher records the moment.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 89</div>
+        <p class="timeline-text">
+          You hunt Warlord Vega in his home settlement. He falls in combat. His weapon, now called Reaver of Vega,
+          is carried back by your colonist. Pirate raids will not come for ninety days.
+        </p>
+      </div>
+      <div class="timeline-entry">
+        <div class="timeline-day">Day 100</div>
+        <p class="timeline-text">
+          The Atlas holds fifty-two events. Two factions still standing. A successor faction rising in
+          the ruins of the third. Your colony is no longer a refugee camp. It is a regional power.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ENDGAME                                                        -->
+<!-- ============================================================ -->
+<section>
+  <div class="container">
+    <div class="feature-block">
+      <div class="feature-art gold-glow">
+        <div class="feature-art-eyebrow">The Watcher offers recognition</div>
+        <p class="feature-art-quote">
+          You have shaped the political map of this world. Factions have risen because of you. Factions
+          have fallen because of you. Your colony is no longer one settlement among many — it is a power.
+        </p>
+        <div class="feature-art-attribution">— Day 200+, when your renown crosses the threshold</div>
+      </div>
+      <div class="feature-text">
+        <div class="section-eyebrow">The endgame</div>
+        <h3>You don't escape this world. You become it.</h3>
+        <p>
+          When the Watcher has tracked enough of your impact — wars won and lost, factions risen and fallen,
+          settlements taken and built — it offers your colony <strong>recognition as a peer faction</strong>.
+        </p>
+        <p>
+          Accept and your three best-disposed factions grant you immediate goodwill. Your colonists wake
+          knowing they built more than a refuge. Decline and every faction in the region reads it as
+          cowardice. The choice is one shot. The Watcher remembers either way.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COMPATIBILITY                                                  -->
+<!-- ============================================================ -->
+<section>
+  <div class="container" style="text-align: center;">
+    <div class="section-eyebrow">Compatible</div>
+    <h2 class="section-title">Plays with everything you already own.</h2>
+    <p class="section-lead" style="margin-left: auto; margin-right: auto;">
+      No DLC required. Detects Royalty, Ideology, Biotech, Anomaly, and Odyssey at runtime and integrates
+      each. Detects major content mods and adapts. Pick Cassandra, Phoebe, or Randy and the entire system
+      goes dormant — vanilla behaviour unchanged. Only the Watcher reads from this engine.
+    </p>
+    <div class="compat">
+      <span class="compat-pill included">Vanilla 1.6</span>
+      <span class="compat-pill included">Royalty (deep integration)</span>
+      <span class="compat-pill included">Ideology (deep integration)</span>
+      <span class="compat-pill included">Biotech (deep integration)</span>
+      <span class="compat-pill included">Anomaly (deep integration)</span>
+      <span class="compat-pill">Combat Extended</span>
+      <span class="compat-pill">Vanilla Factions Expanded</span>
+      <span class="compat-pill">Hospitality</span>
+      <span class="compat-pill">Save Our Ship 2</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CLOSING                                                       -->
+<!-- ============================================================ -->
+<section class="closing">
+  <h2>The Watcher produces <span class="accent">stories about you.</span></h2>
+  <p>
+    Two players starting the same seed will not have the same campaign. The world responds to behaviour, not state.
+    Your story is being written. By you, by the Watcher, by the factions who remember everything you did to them.
+  </p>
+  <p class="signature">"I am not always cruel. I am never asleep."</p>
+</section>
+
+<footer>
+  The Watcher · The Watcher Collective · RimWorld 1.6
+</footer>
+
+</body>
+</html>
