@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Watcher v2.1 — 20 Features</title>
+<style>
+  :root {
+    --bg: #0d0e12;
+    --bg-soft: #161821;
+    --card: #1c1f2a;
+    --border: #2a2f3d;
+    --text: #d8dbe0;
+    --text-dim: #8a8f9b;
+    --gold: #d4a85a;
+    --gold-soft: #8a6e3b;
+    --crimson: #c75050;
+    --teal: #5fa8a8;
+    --violet: #9079c2;
+    --green: #6bb072;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, #0d0e12 0%, #15161d 100%);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  /* ---- Header ---- */
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    margin-top: 16px;
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 32px;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* ---- Tier ---- */
+  .tier {
+    margin-bottom: 56px;
+  }
+  .tier-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .tier-1 .tier-badge { background: var(--teal); color: #0a1212; }
+  .tier-2 .tier-badge { background: var(--violet); color: #100b1e; }
+  .tier-3 .tier-badge { background: var(--green); color: #0a1a0c; }
+  .tier-4 .tier-badge { background: var(--gold); color: #1a1305; }
+  .tier-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+  .tier-tagline {
+    color: var(--text-dim);
+    font-size: 15px;
+    font-style: italic;
+  }
+
+  /* ---- Feature card ---- */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .features { grid-template-columns: 1fr; }
+    .stats { flex-direction: column; gap: 16px; }
+    h1 { font-size: 36px; }
+  }
+  .feature {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .feature:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-soft);
+  }
+  .feature-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .feature-num {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .feature-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .feature-body {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .feature-body p { margin: 0 0 8px 0; }
+  .feature-body p:last-child { margin-bottom: 0; }
+  .feature-body strong { color: var(--gold); font-weight: 600; }
+  .feature-body code {
+    font-family: 'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+    background: var(--bg-soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12.5px;
+    color: var(--teal);
+  }
+  .feature-body em {
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-style: italic;
+  }
+  footer .watcher-quote {
+    color: var(--gold);
+    font-size: 15px;
+    margin-bottom: 8px;
+    font-style: normal;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="eyebrow">The Watcher — v2.1 release</span>
+    <h1>20 features across 4 tiers</h1>
+    <p class="subtitle">
+      A polish, depth, and signature-features pass on top of the v1.x living world simulation
+      and v2.0 expedition systems. Every system is integrated; every reward is meaningful.
+    </p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">20</span><span class="stat-label">Features</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Tiers</span></div>
+      <div class="stat"><span class="stat-num">~600</span><span class="stat-label">New LOC</span></div>
+      <div class="stat"><span class="stat-num">0</span><span class="stat-label">Build errors</span></div>
+    </div>
+  </header>
+
+  <!-- ============ TIER 1 ============ -->
+  <section class="tier tier-1">
+    <div class="tier-header">
+      <span class="tier-badge">Tier 1</span>
+      <h2 class="tier-title">Polish — existing features made premium</h2>
+    </div>
+    <div class="tier-tagline">
+      Six fixes that take v2.0 systems from 70% great to 100% landing.
+    </div>
+    <div class="features" style="margin-top: 20px;">
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#1</span>
+          <h3 class="feature-title">Real signature weapons</h3>
+        </div>
+        <div class="feature-body">
+          <p>When you kill a hunted leader, their dropped weapon is registered in a per-save dictionary with a generated name like <strong>"Reaver of Vega"</strong> or <strong>"Vega's Last Word"</strong>.</p>
+          <p>A Harmony patch on <code>Thing.LabelNoCount</code> renames the weapon in every UI; another on <code>Thing.GetInspectString</code> adds the slain leader's lore ("Taken from Warlord Vega of the Sons of Vega. Killed by Brennick on day 87.").</p>
+          <p><em>The fix: a Pawn.Kill Prefix captures the weapon reference BEFORE vanilla drops it, so the Postfix can register it reliably.</em></p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#2</span>
+          <h3 class="feature-title">Physical artifact trophies</h3>
+        </div>
+        <div class="feature-body">
+          <p>Six new <code>ThingDef</code>s — <strong>Watcher's Tablet</strong>, <strong>Crown of Vega</strong>, <strong>Mercury Ledger</strong>, <strong>Healer Codex</strong>, <strong>Royal Archive</strong>, <strong>Starmap Fragment</strong> — drop at the colony as museum-piece items when their artifact is recovered, in addition to the persistent effect.</p>
+          <p>Players have tangible loot from every artifact, not just an invisible buff.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#3</span>
+          <h3 class="feature-title">Starmap visions feed the Watch List</h3>
+        </div>
+        <div class="feature-body">
+          <p>The Starmap Fragment artifact previously granted nothing the player could see. Now it adds <strong>3 "Watcher's vision" predictions</strong> to the Atlas's Watch List, sourced from long-tail signals: planned successors, fastest-rising faction, high-resentment imminent wars.</p>
+          <p>Each fragment recovered stacks an additional 3 predictions.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#4</span>
+          <h3 class="feature-title">Rich battle-scar narratives</h3>
+        </div>
+        <div class="feature-body">
+          <p>Every dropped scar's <code>scarDetails</code> is enriched at drop time with a multi-paragraph narrative: named leaders at the time of the event, casualty estimates scaled by scar type, atmospheric closer ("The journal ends mid-sentence. Whoever was writing did not live to finish.").</p>
+          <p>When excavated as a "war journal" find, <strong>that's</strong> what the player reads — actual lore, not a tombstone.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#5</span>
+          <h3 class="feature-title">Walking pursuer caravans</h3>
+        </div>
+        <div class="feature-body">
+          <p>Refugee pursuit now spawns a <strong>real hostile <code>Caravan</code></strong> with 3-5 pawns walking the world map toward the refugees. Re-paths daily toward the refugees' current tile.</p>
+          <p>Player can see the pursuer caravan's ETA on the world map and intercept it directly. Tile-equality catch instead of a hidden timed roll — real time pressure.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#6</span>
+          <h3 class="feature-title">Hunt gizmo defender preview</h3>
+        </div>
+        <div class="feature-body">
+          <p>The "Hunt {Title} {Name}" gizmo tooltip now shows <strong>estimated defender threat points</strong>, the leader's top 3 traits, top 2 priorities, and grievance count.</p>
+          <p>You can plan loadout before committing instead of marching in blind.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ TIER 2 ============ -->
+  <section class="tier tier-2">
+    <div class="tier-header">
+      <span class="tier-badge">Tier 2</span>
+      <h2 class="tier-title">Content depth — more meaningful play hours</h2>
+    </div>
+    <div class="tier-tagline">
+      Six features that reuse existing data to make the long-arc simulation feel dramatic.
+    </div>
+    <div class="features" style="margin-top: 20px;">
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#7</span>
+          <h3 class="feature-title">Successor faction personality</h3>
+        </div>
+        <div class="feature-body">
+          <p>When a faction collapses and a successor emerges, the new <code>FactionDef</code> is now <strong>different</strong> from the predecessor's whenever possible — a Pirate collapse may produce an Outlander successor, creating real tonal shift on the world map.</p>
+          <p>The new faction also gets a <strong>60-day "isolationist" window</strong>: warier, less likely to declare war, finding its feet.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#8</span>
+          <h3 class="feature-title">Vendetta-tier escalation</h3>
+        </div>
+        <div class="feature-body">
+          <p>At <strong>5/10/20 raids</strong> from the same faction, the Watcher recognises a vendetta and fires a campaign letter. Every faction hostile to the vendetta-faction now treats your colony with <strong>+15/+30/+45 goodwill bias</strong>.</p>
+          <p>Hunting the vendetta-faction's leader becomes a priority Watch List entry. Personal narrative compounding.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#9</span>
+          <h3 class="feature-title">Succession crisis window</h3>
+        </div>
+        <div class="feature-body">
+          <p>When any visible leader dies (via your hunt or natural death), their faction enters a <strong>7-14 day crisis</strong>: synthetic Falling power trend, atlas-tracked, more vulnerable to player attack.</p>
+          <p>Connects assassination to genuine geopolitical opportunity — a real window where the faction is vulnerable.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#10</span>
+          <h3 class="feature-title">Anti-player alliance bloc</h3>
+        </div>
+        <div class="feature-body">
+          <p>When two factions both have Resentment <strong>≥ 60</strong> with player AND mutual Respect <strong>≥ 40</strong>, they form an <strong>"Alliance against the colony"</strong> bloc. Campaign-defining endgame threat.</p>
+          <p>Dissolves only by destroying one of them OR shifting the long-term political map enough that one no longer resents you.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#11</span>
+          <h3 class="feature-title">Refugee survivor stories</h3>
+        </div>
+        <div class="feature-body">
+          <p>Welcomed refugees are now tagged with a survivor flag referencing their origin settlement, and receive a <strong>mood thought</strong> on joining ("Gratitude" or "NewColonyOptimism").</p>
+          <p>Their backstory connects to your campaign's history — they remember where they came from.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#12</span>
+          <h3 class="feature-title">Combat-encounter scars</h3>
+        </div>
+        <div class="feature-body">
+          <p>30% of ancient <strong>WarBattle</strong> scars (18% for other types) now generate a <strong>combat encounter map</strong> instead of a dialog loot roll. Defenders scaled to caravan strength via Medium tier (~1.0× points).</p>
+          <p>Surviving the ambush yields a heavy haul: <strong>800-1500 silver + 40-80 plasteel + 6-14 components</strong>. Bigger payoff, real risk.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ TIER 3 ============ -->
+  <section class="tier tier-3">
+    <div class="tier-header">
+      <span class="tier-badge">Tier 3</span>
+      <h2 class="tier-title">UX polish — clarity and discoverability</h2>
+    </div>
+    <div class="tier-tagline">
+      Four small fixes with disproportionate impact on player experience.
+    </div>
+    <div class="features" style="margin-top: 20px;">
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#13</span>
+          <h3 class="feature-title">Dev triggers hidden by default</h3>
+        </div>
+        <div class="feature-body">
+          <p>F12 → EventInjector force-trigger buttons are now gated behind a <code>showDevTriggers</code> mod setting (off by default).</p>
+          <p>Production players don't see "Force-spawn outpost" / "Force-collapse faction" anymore. Testers can enable them in mod settings.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#14</span>
+          <h3 class="feature-title">Atlas filter pill bar + search</h3>
+        </div>
+        <div class="feature-body">
+          <p>The Atlas's filter row is redesigned as <strong>clickable category pills</strong> (Settlement, Outpost, War, Refugee, Pirate, Successor, Leader, Scar, Other) plus a faction dropdown plus a <strong>free-text search box</strong>.</p>
+          <p>The Atlas is now browsable instead of greppable.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#15</span>
+          <h3 class="feature-title">Leader inspect detail</h3>
+        </div>
+        <div class="feature-body">
+          <p>Settlement inspect strings now show: <code>"Home of Warlord Vega"</code> + <code>"Known for: Bloodlust, Cautious, Pyromaniac"</code> + <code>"Driven by: Vengeance"</code> + <code>"Holds 4 grievances against your colony"</code>.</p>
+          <p>You get intelligence on a leader before deciding to hunt them.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#16</span>
+          <h3 class="feature-title">Schema version warning</h3>
+        </div>
+        <div class="feature-body">
+          <p><code>WatcherSchemaVersion = 21</code> is scribed on the WorldComponent. When loading a save made with an earlier version of The Watcher, the player gets a <code>Log.Warning</code> noting the mismatch — preventing silent data confusion.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ TIER 4 ============ -->
+  <section class="tier tier-4">
+    <div class="tier-header">
+      <span class="tier-badge">Tier 4</span>
+      <h2 class="tier-title">Signature — features that define the mod</h2>
+    </div>
+    <div class="tier-tagline">
+      Three ambitious additions that change what The Watcher feels like to play.
+    </div>
+    <div class="features" style="margin-top: 20px;">
+
+      <article class="feature" style="grid-column: span 2;">
+        <div class="feature-head">
+          <span class="feature-num">#18</span>
+          <h3 class="feature-title">The Watcher's Voice</h3>
+        </div>
+        <div class="feature-body">
+          <p>Every <strong>~30 days</strong> (25% roll), a <strong>first-person message from the Watcher</strong> reflects on your campaign. Composed from a pool of openings, factual middle reflections, and atmospheric closers — pulling from your recent collapses, the most-resentful faction, your colony's archetype, atlas event count.</p>
+          <p>Sample: <em>"It is day 87. I have been watching since before you arrived. I remember the Sons of Vega. They were a power once, and you watched them fall. You have shaped this colony into a Fortress. I know what that means for who you will become. Carry on. — The Watcher"</em></p>
+          <p>The storyteller stops being a system. It becomes a character.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#19</span>
+          <h3 class="feature-title">Endgame Faction Recognition</h3>
+        </div>
+        <div class="feature-body">
+          <p>At <strong>day 200+</strong> with sufficient renown (composite of all faction-disposition magnitudes), the Watcher offers to recognise your colony as <strong>a peer faction</strong> on the world map.</p>
+          <p><strong>Accept:</strong> +20 goodwill with your three best-disposed factions, NewColonyOptimism mood for all colonists, Atlas badge marking the colony as a recognised faction.</p>
+          <p><strong>Decline:</strong> −6 goodwill with every faction — they read your refusal as cowardice.</p>
+          <p>A campaign-defining decision, one shot.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-head">
+          <span class="feature-num">#20</span>
+          <h3 class="feature-title">Visible cultural drift</h3>
+        </div>
+        <div class="feature-body">
+          <p>Settlements of factions whose <code>CulturalDrift.TotalDrift ≥ 30</code> now show their adoption of your colony's culture directly in the inspect string:</p>
+          <p><code>"Visibly influenced by your colony's culture (ideology)."</code><br>
+          <code>"Has heavily adopted your colony's culture (technology drift dominant)."</code></p>
+          <p>Players see the long-tail cultural simulation producing change on the world map.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer>
+    <p class="watcher-quote">"I am not always cruel. I am never asleep."</p>
+    <p>The Watcher v2.1 · The Watcher Collective · RimWorld 1.6</p>
+  </footer>
+
+</div>
+</body>
+</html>
